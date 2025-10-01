@@ -1,0 +1,50 @@
+---
+name: lint
+
+# ---------------
+# Control secrets
+# ---------------
+#
+# At the GitHub 'organisation' or 'project' level you are expected to
+# have the following GitHub 'Repository Secrets' defined
+# (i.e. via 'Settings -> Secrets'): -
+#
+# (none)
+#
+# -----------
+# Environment (GitHub Environments)
+# -----------
+#
+# (none)
+
+on:
+  push:
+    branches:
+    - '*'
+    tags-ignore:
+    - '*'
+  schedule:
+  # Build every Sunday (0) at 4:45pm
+  - cron: '45 16 * * 0'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install yamllint pre-commit
+    - name: Run pre-commit (all files)
+      run: |
+        pre-commit run --all-files
+    - name: Lint
+      run: |
+        yamllint .
+        find . -type f -name '*.yaml.j2' -exec yamllint {} +
