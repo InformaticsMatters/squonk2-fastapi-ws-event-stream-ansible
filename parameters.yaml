@@ -1,0 +1,13 @@
+---
+
+ess_namespace: account-server-api-test
+ess_image_tag: '3.0.1'
+ess_service_account: account-server
+ess_ws_hostname: account-server-ess.xchem-dev.diamond.ac.uk
+ess_ampq_url: amqp://eventstream:MaZXvQnDLgsLnL@rabbitmq.im-infra-test.svc.cluster.local:5672/as?heartbeat=90
+ess_cert_issuer: production
+
+ess_shared_volume_volume_storageclass: csi-cinder-sc-delete
+ess_log_volume_volume_storageclass: csi-cinder-sc-delete
+
+ess_pull_policy_always: yes
