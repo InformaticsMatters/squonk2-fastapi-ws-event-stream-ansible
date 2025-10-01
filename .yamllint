@@ -7,9 +7,9 @@ yaml-files:
 
 ignore: |
   .github/
-  roles/app/templates/deployment.yaml.j2
-  roles/app/templates/serviceaccount.yaml.j2
-  roles/app/templates/statefulset.yaml.j2
+  roles/app/templates/pvc-log.yaml.j2
+  roles/app/templates/pvc-database.yaml.j2
+  roles/app/templates/ingress.yaml.j2
 
 rules:
   indentation:
