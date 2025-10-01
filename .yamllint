@@ -10,6 +10,7 @@ ignore: |
   roles/app/templates/pvc-log.yaml.j2
   roles/app/templates/pvc-database.yaml.j2
   roles/app/templates/ingress.yaml.j2
+  roles/app/templates/deployment.yaml.j2
 
 rules:
   indentation:
