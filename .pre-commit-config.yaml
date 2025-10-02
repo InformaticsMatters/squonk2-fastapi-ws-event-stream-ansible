@@ -1,5 +1,5 @@
 ---
-minimum_pre_commit_version: 3.8.0
+minimum_pre_commit_version: 3.5.0
 
 repos:
 
@@ -8,7 +8,7 @@ repos:
 
 # Conventional Commit message checker (commitizen)
 - repo: https://github.com/commitizen-tools/commitizen
-  rev: v4.1.0
+  rev: v4.9.1
   hooks:
   - id: commitizen
     stages:
@@ -22,7 +22,7 @@ repos:
 
 # Standard pre-commit rules
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v5.0.0
+  rev: v6.0.0
   hooks:
   - id: check-case-conflict
   - id: check-docstring-first
@@ -33,3 +33,12 @@ repos:
   - id: trailing-whitespace
     args:
     - --markdown-linebreak-ext=md
+
+# YAML Lint
+- repo: https://github.com/adrienverge/yamllint
+  rev: v1.37.1
+  hooks:
+  - id: yamllint
+    types:
+    - file
+    files: (\.yaml|\.yaml.j2)$

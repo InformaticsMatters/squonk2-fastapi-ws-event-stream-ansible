@@ -5,7 +5,8 @@
 - name: Assert authentication
   assert:
     that:
-    - kubeconfig |string | length > 0
+    - kubeconfig | string | length > 0
+    msg: "Define KUBECONFIG"
 
 - name: Display kubeconfig
   debug:
