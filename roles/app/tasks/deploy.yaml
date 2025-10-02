@@ -43,19 +43,19 @@
 
 - name: Deploy PVCs ({{ ess_namespace }})
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}.yaml.j2') }}"
+    definition: "{{ lookup('template', item) }}"
   loop:
-  - pvc-database
-  - pvc-log
+  - pvc-database.yaml.j2
+  - pvc-log.yaml.j2
 
 - name: Deploy objects ({{ ess_namespace }})
   kubernetes.core.k8s:
-    definition: "{{ lookup('template', '{{ item }}.yaml.j2') }}"
+    definition: "{{ lookup('template', item) }}"
     wait: yes
   loop:
-  - deployment
-  - service-api
-  - service-ws
+  - deployment.yaml.j2
+  - service-api.yaml.j2
+  - service-ws.yaml.j2
 
 - name: Deploy ingress ({{ ess_namespace }})
   kubernetes.core.k8s:
