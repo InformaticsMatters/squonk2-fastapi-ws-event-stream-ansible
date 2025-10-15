@@ -12,3 +12,4 @@ r_password: "{{ lookup('env', 'IM_DEV_ESS_STREAM_PASSWORD') }}"
 ess_ampq_url: amqp://{{ r_user }}:{{ r_password }}@rabbitmq.im-infra.svc.cluster.local:5672/as?heartbeat=90
 
 ess_pull_policy_always: yes
+ess_priority_class: im-application-high
