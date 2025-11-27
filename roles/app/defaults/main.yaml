@@ -29,6 +29,11 @@ ess_cert_issuer:
 # One of 'present' or 'absent'.
 ess_ingress_state: present
 
+# The name of the instance,
+# ideally unique for each separate deployment.
+# Used by the app.kubernetes.io/instance label annotation.
+ess_instance_name: production
+
 # Our image details
 ess_image_owner: informaticsmatters
 

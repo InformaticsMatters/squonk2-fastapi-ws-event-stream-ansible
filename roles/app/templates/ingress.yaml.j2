@@ -4,6 +4,12 @@ apiVersion: networking.k8s.io/v1
 metadata:
   name: ess-ws
   namespace: {{ ess_namespace }}
+  labels:
+    app.kubernetes.io/name: im-ess
+    app.kubernetes.io/instance: im-ess-{{ ess_instance_name }}
+    app.kubernetes.io/version: "{{ ess_image_tag }}"
+    app.kubernetes.io/component: websocket
+    app.kubernetes.io/managed-by: Ansible
   annotations:
     nginx.ingress.kubernetes.io/proxy-connect-timeout: "3600"
     nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
