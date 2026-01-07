@@ -7,10 +7,10 @@ yaml-files:
 
 ignore: |
   .github/
-  roles/app/templates/pvc-log.yaml.j2
-  roles/app/templates/pvc-database.yaml.j2
-  roles/app/templates/ingress.yaml.j2
-  roles/app/templates/deployment.yaml.j2
+  roles/ess/templates/pvc-log.yaml.j2
+  roles/ess/templates/pvc-database.yaml.j2
+  roles/ess/templates/ingress.yaml.j2
+  roles/ess/templates/deployment.yaml.j2
 
 rules:
   indentation:
