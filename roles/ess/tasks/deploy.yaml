@@ -11,8 +11,6 @@
     - ess_service_account != 'SetMe'
     - ess_ws_hostname | length > 0
     - ess_ws_hostname != 'SetMe'
-    - ess_ampq_url | length > 0
-    - ess_ampq_url != 'SetMe'
 
 # Check the namespace and other basic materials
 
@@ -38,6 +36,27 @@
   ansible.builtin.assert:
     that:
     - sa_result.resources | length == 1
+
+- name: Get RabbitMQ Secret
+  kubernetes.core.k8s_info:
+    kind: Secret
+    name: rabbitmq
+    namespace: "{{ ess_namespace }}"
+  register: s_result
+
+- name: Insist that we have secrets
+  ansible.builtin.assert:
+    that:
+    - s_result.resources | length == 1
+
+- name: Set ESS RabbitMQ credentials
+  ansible.builtin.set_fact:
+    rmq_user: "{{ s_result.resources[0].data.vhost_es_user | b64decode }}"
+    rmq_password: "{{ s_result.resources[0].data.vhost_es_user_password | b64decode }}"
+
+- name: Set ESS RabbitMQ url
+  ansible.builtin.set_fact:
+    ampq_url: amqp://{{ rmq_user }}:{{ rmq_password }}@rabbit.{{ ess_namespace }}.svc.cluster.local:{{ ess_rmq_port }}/as?heartbeat=90
 
 # Ok - looks like everything's set up. Let's deploy the ESS
 

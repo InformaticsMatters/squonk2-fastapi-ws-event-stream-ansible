@@ -1,15 +1,16 @@
 ---
 
-- include_tasks: prep.yaml
+- name: Prep
+  include_tasks: prep.yaml
 
 - name: Assert authentication
-  assert:
+  ansible.builtin.assert:
     that:
     - kubeconfig | string | length > 0
     msg: "Define KUBECONFIG"
 
 - name: Display kubeconfig
-  debug:
+  ansible.builtin.debug:
     var: kubeconfig
 
 # Go...
@@ -22,7 +23,7 @@
   block:
 
   - name: Deploy
-    include_tasks: deploy.yaml
+    ansible.builtin.include_tasks: deploy.yaml
 
 - name: Undeploy block
   when: ess_state == 'absent'
@@ -32,4 +33,4 @@
   block:
 
   - name: Undeploy
-    include_tasks: undeploy.yaml
+    ansible.builtin.include_tasks: undeploy.yaml
