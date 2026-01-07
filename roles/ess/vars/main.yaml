@@ -8,8 +8,11 @@ ess_ingress_class: nginx
 # and 'letsencrypt-nginx-production'
 ess_cert_manager_issuer_base: letsencrypt-{{ ess_ingress_class }}
 
+# The RabbitMQ port
+ess_rmq_port: 5672
+
 # memcached image tag
-ess_memcached_tag: 1.6.39-alpine3.22
+ess_memcached_tag: 1.6.40-alpine3.23
 # memcached resources
 ess_memcached_cpu_request: 100m
 ess_memcached_cpu_limit: 100m
