@@ -2,35 +2,41 @@
 
 - name: Prep
   include_tasks: prep.yaml
+  vars:
+    kubeconfig: "{{ dt_kubeconfig }}"
 
-- name: Assert authentication
+# The 'installation' must also be set.
+
+- name: Assert installation name is defined
   ansible.builtin.assert:
     that:
-    - kubeconfig | string | length > 0
-    msg: "Define KUBECONFIG"
+    - ess_installation_name | string | length > 0
+    - ess_installation_name != 'SetMe'
+    msg: "You must define 'ess_installation_name'"
 
-- name: Display kubeconfig
-  ansible.builtin.debug:
-    var: kubeconfig
+# Include sensitive (Ansible Vault) variables based on the installation name.
+# We include 'sensitive-local.vault' variables if the installation name is 'local'.
+# The user will need to provide the vault password.
+
+- name: Include sensitive (vault) variables ({{ ess_installation_name }})
+  ansible.builtin.include_vars:
+    file: sensitive-{{ ess_installation_name }}.vault
+  when: ess_installation_name | length > 0
 
 # Go...
 
-- name: Deploy block
-  when: ess_state == 'present'
+- name: Go
   module_defaults:
     group/k8s:
-      kubeconfig: "{{ kubeconfig }}"
+      host: "{{ k8s_auth_host }}"
+      api_key: "{{ k8s_auth_api_key }}"
+      kubeconfig: "{{ k8s_auth_kubeconfig }}"
   block:
 
   - name: Deploy
     ansible.builtin.include_tasks: deploy.yaml
-
-- name: Undeploy block
-  when: ess_state == 'absent'
-  module_defaults:
-    group/k8s:
-      kubeconfig: "{{ kubeconfig }}"
-  block:
+    when: ess_state == 'present'
 
   - name: Undeploy
     ansible.builtin.include_tasks: undeploy.yaml
+    when: ess_state == 'absent'
