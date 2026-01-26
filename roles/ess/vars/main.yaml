@@ -8,6 +8,9 @@ ess_ingress_class: nginx
 # and 'letsencrypt-nginx-production'
 ess_cert_manager_issuer_base: letsencrypt-{{ ess_ingress_class }}
 
+# Optional KUBECONFIG
+ess_kubeconfig: ''
+
 # The RabbitMQ port
 ess_rmq_port: 5672
 
