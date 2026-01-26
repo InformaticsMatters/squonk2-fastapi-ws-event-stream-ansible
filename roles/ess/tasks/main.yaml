@@ -3,7 +3,7 @@
 - name: Prep
   include_tasks: prep.yaml
   vars:
-    kubeconfig: "{{ dt_kubeconfig }}"
+    kubeconfig: "{{ ess_kubeconfig }}"
 
 # The 'installation' must also be set.
 
