@@ -56,7 +56,7 @@
 
 - name: Set ESS RabbitMQ url
   ansible.builtin.set_fact:
-    ampq_url: amqp://{{ rmq_user }}:{{ rmq_password }}@rabbit.{{ ess_namespace }}.svc.cluster.local:{{ ess_rmq_port }}/as?heartbeat=90
+    ampq_url: amqp://{{ rmq_user }}:{{ rmq_password }}@rabbit.{{ ess_rmq_namespace }}.svc:{{ ess_rmq_port }}/as?heartbeat=90
 
 # Ok - looks like everything's set up. Let's deploy the ESS
 
