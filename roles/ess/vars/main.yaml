@@ -11,6 +11,8 @@ ess_cert_manager_issuer_base: letsencrypt-{{ ess_ingress_class }}
 # Optional KUBECONFIG
 ess_kubeconfig: ''
 
+# The Namespace where the RabbitMQ server is installed (expected to exist)
+ess_rmq_namespace: im-infra
 # The RabbitMQ port
 ess_rmq_port: 5672
 
