@@ -17,7 +17,7 @@ ess_rmq_namespace: im-infra
 ess_rmq_port: 5672
 
 # memcached image tag
-ess_memcached_tag: 1.6.40-alpine3.23
+ess_memcached_tag: 1.6.45-alpine3.24
 # memcached resources
 ess_memcached_cpu_request: 100m
 ess_memcached_cpu_limit: 100m

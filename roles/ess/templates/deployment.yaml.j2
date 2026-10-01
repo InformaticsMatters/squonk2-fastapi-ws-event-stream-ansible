@@ -45,6 +45,40 @@ spec:
               - key: informaticsmatters.com/purpose-core
                 operator: Exists
 
+      # Memcached (used by the ESS)
+      initContainers:
+      - name: memcached
+        image: memcached:{{ ess_memcached_tag }}
+        imagePullPolicy: IfNotPresent
+        # A native sidecar (an init container that is always restarted).
+        # The kubelet will not start the ess container until
+        # this container's startupProbe has succeeded.
+        restartPolicy: Always
+        args:
+        - '-v'
+        - '--memory-limit={{ ess_memcached_memory_limit_mb }}'
+        ports:
+        - containerPort: 11211
+          name: memcached
+        startupProbe:
+          tcpSocket:
+            port: 11211
+          failureThreshold: 30
+          periodSeconds: 2
+        resources:
+          requests:
+            cpu: {{ ess_memcached_cpu_request }}
+            memory: {{ ess_memcached_mem_request }}
+{% if ess_memcached_cpu_limit or ess_memcached_mem_limit %}
+          limits:
+{% if ess_memcached_cpu_limit %}
+            cpu: {{ ess_memcached_cpu_limit }}
+{% endif %}
+{% if ess_memcached_mem_limit %}
+            memory: {{ ess_memcached_mem_limit }}
+{% endif %}
+{% endif %}
+
       containers:
       - name: ess
         image: {{ ess_image_owner }}/squonk2-fastapi-ws-event-stream:{{ ess_image_tag }}
@@ -118,29 +152,6 @@ spec:
 {% endif %}
 {% if ess_api_mem_limit %}
             memory: {{ ess_api_mem_limit }}
-{% endif %}
-{% endif %}
-
-      - name: memcached
-        image: memcached:{{ ess_memcached_tag }}
-        imagePullPolicy: IfNotPresent
-        args:
-        - '-v'
-        - '--memory-limit={{ ess_memcached_memory_limit_mb }}'
-        ports:
-        - containerPort: 11211
-          name: memcached
-        resources:
-          requests:
-            cpu: {{ ess_memcached_cpu_request }}
-            memory: {{ ess_memcached_mem_request }}
-{% if ess_memcached_cpu_limit or ess_memcached_mem_limit %}
-          limits:
-{% if ess_memcached_cpu_limit %}
-            cpu: {{ ess_memcached_cpu_limit }}
-{% endif %}
-{% if ess_memcached_mem_limit %}
-            memory: {{ ess_memcached_mem_limit }}
 {% endif %}
 {% endif %}
 
